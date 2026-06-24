@@ -1,0 +1,129 @@
+<Window x:Class="TaskManager.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Менеджер задач" Height="688" Width="1364"
+        Background="{StaticResource BackgroundBrush}"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56"/>
+            <!-- шапка -->
+            <RowDefinition Height="Auto"/>
+            <!-- панель инструментов -->
+            <RowDefinition Height="*"/>
+            <!-- список задач -->
+            <RowDefinition Height="Auto"/>
+            <!-- статистика -->
+        </Grid.RowDefinitions>
+
+        <!-- ═══ ШАПКА ═══════════════════════════════════════════════════════ -->
+        <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}">
+            <TextBlock Text="📋 Менеджер задач" FontSize="20" FontWeight="Bold"
+                       Foreground="White" VerticalAlignment="Center" Margin="16,0"/>
+        </Border>
+
+        <!-- ═══ ПАНЕЛЬ ИНСТРУМЕНТОВ ══════════════════════════════════════════ -->
+        <Border Grid.Row="1" Background="{StaticResource CardBrush}"
+                BorderBrush="#E0E0E0" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="12,8">
+
+                <!-- Кнопки действий -->
+                <Button Content="➕ Добавить" Style="{StaticResource PrimaryButton}"
+                        Click="AddTask_Click" Margin="0,0,8,0"/>
+                <Button Content="✏️ Изменить" Style="{StaticResource PrimaryButton}"
+                        Click="EditTask_Click" Margin="0,0,8,0"/>
+                <Button Content="🗑 Удалить" Style="{StaticResource DangerButton}"
+                        Click="DeleteTask_Click" Margin="0,0,20,0"/>
+
+                <!-- Фильтр по статусу -->
+                <TextBlock Text="Статус:" VerticalAlignment="Center" Margin="0,0,6,0"
+                           Foreground="{StaticResource SubtextBrush}"/>
+                <ComboBox x:Name="FilterComboBox" Width="130"
+                          SelectionChanged="FilterComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все" IsSelected="True"/>
+                    <ComboBoxItem Content="Новая"/>
+                    <ComboBoxItem Content="В процессе"/>
+                    <ComboBoxItem Content="Завершена"/>
+                </ComboBox>
+
+                <!-- Сортировка -->
+                <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="12,0,6,0"
+                           Foreground="{StaticResource SubtextBrush}"/>
+                <ComboBox x:Name="SortComboBox" Width="140"
+                          SelectionChanged="SortComboBox_SelectionChanged">
+                    <ComboBoxItem Content="По сроку" IsSelected="True"/>
+                    <ComboBoxItem Content="По приоритету"/>
+                </ComboBox>
+
+                <!-- Поиск -->
+                <TextBox x:Name="SearchBox" Width="200" Margin="20,0,0,0"
+                         Text="Поиск..." Foreground="Gray"
+                         GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"
+                         TextChanged="SearchBox_TextChanged"/>
+
+                <!-- Файловые операции -->
+                <Button Content="💾 JSON" Style="{StaticResource PrimaryButton}"
+                        Margin="20,0,8,0" Click="SaveJson_Click"/>
+                <Button Content="📂 JSON" Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,8,0" Click="LoadJson_Click"/>
+                <Button Content="💾 XML"  Style="{StaticResource PrimaryButton}"
+                        Margin="0,0,8,0" Click="SaveXml_Click"/>
+                <Button Content="📂 XML"  Style="{StaticResource PrimaryButton}"
+                        Click="LoadXml_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ═══ СПИСОК ЗАДАЧ ═════════════════════════════════════════════════ -->
+        <ListView x:Name="TaskListView" Grid.Row="2"
+                  Background="Transparent" BorderThickness="0"
+                  SelectionChanged="TaskListView_SelectionChanged"
+                  Margin="12,8">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="★" Width="30"
+                                    DisplayMemberBinding="{Binding ImportantStar}"/>
+                    <GridViewColumn Header="ID"          Width="45"
+                                    DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Название"    Width="220"
+                                    DisplayMemberBinding="{Binding Title}"/>
+                    <GridViewColumn Header="Описание"    Width="200"
+                                    DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="Приоритет"   Width="90"
+                                    DisplayMemberBinding="{Binding PriorityDisplay}"/>
+                    <GridViewColumn Header="Статус"      Width="110"
+                                    DisplayMemberBinding="{Binding StatusDisplay}"/>
+                    <GridViewColumn Header="Срок"        Width="100"
+                                    DisplayMemberBinding="{Binding DueDateDisplay}"/>
+                    <GridViewColumn Header="Просрочено"  Width="90"
+                                    DisplayMemberBinding="{Binding OverdueDisplay}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="4"/>
+                    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOverdue}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource SubtextBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsImportant}" Value="True">
+                            <Setter Property="Background" Value="#FFF8E1"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <!-- ═══ СТАТИСТИКА ═══════════════════════════════════════════════════ -->
+        <Border Grid.Row="3" Background="{StaticResource CardBrush}"
+                BorderBrush="#E0E0E0" BorderThickness="0,1,0,0" Padding="12,8">
+            <TextBlock x:Name="StatsText"
+                       Foreground="{StaticResource SubtextBrush}" FontSize="12"/>
+        </Border>
+    </Grid>
+</Window>

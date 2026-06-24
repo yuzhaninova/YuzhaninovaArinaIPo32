@@ -1,0 +1,11 @@
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\bin\Debug\net8.0\TaskManager.Core.deps.json
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\bin\Debug\net8.0\TaskManager.Core.dll
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\bin\Debug\net8.0\TaskManager.Core.pdb
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\TaskManager.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\TaskManager.Core.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\TaskManager.Core.AssemblyInfo.cs
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\TaskManager.Core.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\TaskManager.Core.dll
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\refint\TaskManager.Core.dll
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\TaskManager.Core.pdb
+C:\Users\Admin\Desktop\9867\TaskManager\TaskManager.Core\obj\Debug\net8.0\ref\TaskManager.Core.dll
